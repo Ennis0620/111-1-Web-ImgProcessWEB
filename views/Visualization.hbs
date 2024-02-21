@@ -1,0 +1,48 @@
+<div class="text-box">
+    <h1>{{title}}</h1>
+    <p>
+        Auto Visualization:將多維度原始資料降維成2D、3D並產生視覺化分群成果。
+    </p>
+
+</div>
+
+
+</section>
+
+<section class="aug">
+
+    <h1>降維視覺化</h1>
+    <h1>上傳資料集</h1>
+    <p>uplaod</p>
+    <div class="row">
+        <div class="aug-col">
+            <h3>Auto Visualization</h3>
+            <p style="text-align:left">
+                資料降維視覺化<br>
+                1.上傳資料集<br>
+            </p>
+        </div>
+        <!--上傳資料集-->
+        <div class="aug-col">
+            <form method="POST" action="/profile-upload-multiple-Visual" enctype="multipart/form-data" id="uploadImgs">
+                <h3>Upload multiple images</h3><br>
+                <div class="col" align="center">
+                    <input type="file" id="profile-files" name="profile-files" accept="image/*" 
+                        required multiple />
+                    <!--顯示上傳資料
+                    <label for="file-input">
+                    </label>
+                    <p id="num-of-files"></p>
+                    <div id="images">
+                    </div>-->
+                </div>
+                <br>
+                <div class="row">
+                    <input type="submit" value="Upload" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+
+    </div>
+</section>
+

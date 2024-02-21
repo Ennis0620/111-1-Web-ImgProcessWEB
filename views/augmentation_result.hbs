@@ -1,0 +1,134 @@
+<style>
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        /* Safari */
+        animation: spin 2s linear infinite;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<div class="text-box">
+    <h1>{{title}}</h1>
+
+    <p>
+        資料增強結果及快速下載。
+    </p>
+
+</div>
+
+<section class="aug">
+    <h1>一鍵下載</h1>
+    <p>downloads</p>
+
+    <div class="container">
+        <div class="row">
+            <div class="aug-col">
+                <h3>Auto Augmentation</h3>
+                <p style="text-align:left">
+                    資料增強<br>
+                    6.一鍵下載<br>
+                </p>
+            </div>
+
+        </div>
+        <div class="aug-col">
+            <button class="btn btn-danger" onclick="zipButton()">下載.ZIP</button>
+        </div>
+        <div class="container">
+            <div class="loader" id="loader"></div>
+        </div>
+        <p id="num-of-files"></p>
+        <div id="images">
+        </div>
+
+    </div>
+    </div>
+    <!--選擇方法-->
+    <div class="aug-col">
+
+    </div>
+
+    <!--call python 進行augmentation-->
+    <script>
+        const user_id = 1
+        setTimeout(function () {
+            fetch('http://localhost:3000/augmentation_result/' + user_id)
+                .then(response => {
+                    return response.json()//解析成一個json 物件
+                })// 因為轉成json 物件 也回傳一個promise  出來
+                .then(data => {
+                    let html_string = '';
+                    console.log('fetch:', data);
+                    data.forEach(obj => {
+                        Object.entries(obj).forEach(([key, value]) => {
+                            //console.log(JSON.stringify(key));
+                            const queryResult = value;
+                            //console.log(queryResult.image_path);
+                            const url = `http://localhost:3000/${queryResult.image_augmen}`
+
+                            const box = `
+                                    <figure>
+                                        <div id='box_${key}'>
+                                            <img src='${url}'>
+                                            <figcaption>${key}</figcaption>
+                                        </div>
+                                    </figure>
+                                        `
+                                ;
+                            html_string += box;
+                        });
+                    });
+                    document.getElementById('images').innerHTML = html_string;
+                    //document.body.innerHTML = html_string ;
+                });
+            //移除loading
+            const element = document.getElementById('loader');
+            element.remove();
+        }, 7000);
+
+        //zip button
+        function zipButton() {
+
+            fetch('http://localhost:3000/zip/' + user_id)
+                .then(response => {
+                    return response.json()//解析成一個json 物件
+                })// 因為轉成json 物件 也回傳一個promise  出來
+                .then(data => {
+                    let html_string = '';
+                    console.log('fetch:', data);
+                    //document.body.innerHTML = html_string ;
+                });
+            alert('下載完成!');
+
+        }
+    </script>
+
+
+
+
+
+</section>

@@ -1,0 +1,110 @@
+<style>
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        /* Safari */
+        animation: spin 2s linear infinite;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<div class="text-box">
+    <h1>{{title}}</h1>
+    <p>
+        Auto Visualization:將多維度原始資料降維成2D、3D並產生視覺化分群成果。
+    </p>
+
+</div>
+
+
+</section>
+
+<section class="aug">
+    <h1>降維視覺化結果</h1>
+    <p>result</p>
+    <div class="row">
+        <div class="aug-col">
+            <h3>Auto Visualization</h3>
+            <p style="text-align:left">
+                資料降維視覺化<br>
+                5.找到最適合的分群協助資料挑選<br>
+
+            </p>
+        </div>
+
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="row">
+            <div class="container">
+                <div class="loader" id="loader"></div>
+            </div>
+            <div class="container">
+                <div id="images">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+<script>
+    const user_id = 1
+    setTimeout(function () {
+        fetch('http://localhost:3000/Visualization_result/' + user_id)
+            .then(response => {
+                return response.json()//解析成一個json 物件
+            })// 因為轉成json 物件 也回傳一個promise  出來
+            .then(data => {
+                let html_string = '';
+                console.log('fetch:', data);
+                data.forEach(obj => {
+                    Object.entries(obj).forEach(([key, value]) => {
+                        //console.log(JSON.stringify(key));
+                        const queryResult = value;
+                        //console.log(queryResult.image_path);
+                        const url = `http://localhost:3000/${queryResult.image_visual_result}`
+
+                        const box = `
+                                    <figure style="width:300%">
+                                        <div id='box_${key}'>
+                                            <img src='${url}'>
+                                            <figcaption>Visualization</figcaption>
+                                        </div>
+                                    </figure>
+                                        `
+                            ;
+                        html_string += box;
+                    });
+                });
+                document.getElementById('images').innerHTML = html_string;
+            });
+        //移除loading
+        const element = document.getElementById('loader');
+        element.remove();
+    }, 7000);
+</script>

@@ -1,0 +1,67 @@
+<div class="text-box">
+    <h1>{{title}}</h1>
+    <p>
+        Image labeling:透過網頁和進行資料標記並經專業醫師的錄音來協助了解標記準則。
+    </p>
+
+</div>
+
+
+</section>
+
+<section class="aug">
+    <h1>上傳資料集</h1>
+    <p>uplaod</p>
+    <div class="row">
+        <div class="aug-col">
+            <h3>Image labeling</h3>
+            <p style="text-align:left">
+                協同資料標記<br>
+                1.上傳資料集<br>
+                2.邀請專業人士協助，使用polygon來標記物體<br>
+                3.醫師點選錄音來錄製講述的標記特徵、重點<br>
+                4.使用者透過錄音學習自行標記影像<br>
+                5.一鍵下載
+            </p>
+        </div>
+        <div class="aug-col">
+            <input type="file" accept="image/*" onchange="loadFile(event)">
+            <p><img id="output" width="200" /></p>
+        </div>
+        <div class="aug-col">
+            <div>
+                <audio controls autoplay></audio>
+                <input onclick="startRecording()" type="button" value="錄音" />
+                <input onclick="stopRecording()" type="button" value="停止" />
+                <input onclick="playRecording()" type="button" value="播放" />
+                <input onclick="uploadAudio()" type="button" value="提交" />
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<script>
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+    navigator.getUserMedia(constraints, successCallback, errorCallback);
+    var s = document.getElementById('s');
+    var p = document.getElementById('p');
+    var timer;
+    var context = new AudioContext();
+    navigator.getUserMedia({ audio: true }, function (stream) {
+
+        //把要做的事情寫在這邊
+
+    }, function () {
+        console.log('error');
+    });
+</script>
+
+<section class="aug">
+    <h1>資料標記</h1>
+    <div class="row">
+
+    </div>
+</section>

@@ -1,0 +1,149 @@
+<div class="text-box">
+    <h1>{{title}}</h1>
+
+    <p>
+        資料增強。
+    </p>
+
+</div>
+
+<section class="aug">
+    <h1>資料集資增強方式</h1>
+    <p>methods</p>
+
+    <div class="container">
+        <div class="row">
+            <div class="aug-col">
+                <h3>Auto Augmentation</h3>
+                <p style="text-align:left">
+                    資料增強<br>
+                    3.調整該方法相關參數<br>
+                    4.組合多種方法<br>
+                    5.執行<br>
+                </p>
+            </div>
+        </div>
+
+
+        <p id="num-of-files"></p>
+        <div id="images">
+        </div>
+
+
+    </div>
+    </div>
+    <!--選擇方法-->
+    <!--
+    <div class="aug-col">
+        <form method="POST" action="/augmentation_result" id="aug_res">
+            <label for="aug_met" style="padding:20px 20px;">選擇增強方式</label><br>
+            <div class="row" align="center">
+                <select multiple id="aug_m" name="aug_m" multiselect-search="true" multiselect-select-all="true"
+                    multiselect-max-items="5" multiselect-hide-x="false">
+                    <option value="vertical_flip">垂直翻轉</option>
+                    <option value="horizontal_flip">水平翻轉</option>
+                    <option value="histogramEqualColor">彩色直方圖均化</option>
+                    <option value="adjust_gamma">亮度調整</option>
+                    <option value="erode">侵蝕</option>
+                    <option value="dilate">膨脹</option>
+                    <option value="opening">開運算</option>
+                    <option value="closing">閉運算</option>
+                    <option value="Gradient">Gradien</option>
+                </select>
+            </div>
+
+            <div class="container" style="padding:20px 20px;">
+                <div class="row">
+                    <div class="col align-self-start">
+                        
+                        <input type="submit" value="submit" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    -->.. 
+
+    <div class="container">
+        <div class="alert alert-primary">
+            <span class="label label-default">選擇增強方式</span>
+        </div>
+
+    </div>
+
+
+
+
+    <form method="GET" action="/call/aug" id="aug_param">
+
+        <label for="user_id"></label>
+        <input type="hidden" id="user_id" name="user_id" readonly >
+        <br>
+
+        <input type="checkbox" id="vertical_flip" name="vertical_flip" checked="checked" >
+        <label for="vertical_flip">垂直翻轉</label>
+
+        <input type="checkbox" id="horizontal_flip" name="horizontal_flip" checked="checked">
+        <label for="horizontal_flip">水平翻轉</label>
+
+        <input type="checkbox" id="histogramEqualColor" name="histogramEqualColor" checked="checked">
+        <label for="histogramEqualColor">彩色直方圖均化</label>
+
+        <br><br>
+        <label for="adjust_gamma">亮度調整</label>
+        <input type="text" id="adjust_gamma" name="adjust_gamma" value="1" placeholder="輸入gamma值(小數)，越大越亮">
+        
+        <br><br>
+        <label for="rotation">角度調整</label>
+        <input type="text" id="rotation" name="rotation" value="0" placeholder="旋轉角度(-順時針 / +逆時針)">
+
+        <br><br>
+        <input type="submit" id="submit_aug" name="submit_aug" value="submit" class="btn btn-primary">
+        <br><br>
+    </form>
+
+
+    <!--多選select-->
+    <script src="/javascripts/multiselect-dropdown.js"></script>
+
+    <!--query所上傳的影像-->
+    <script>
+        const user_id = 1
+
+        fetch('http://localhost:3000/augmentation_choose/' + user_id)
+            .then(response => {
+                return response.json()//解析成一個json 物件
+            })// 因為轉成json 物件 也回傳一個promise  出來
+            .then(data => {
+                let html_string = '';
+                console.log('fetch:', data);
+                data.forEach(obj => {
+                    Object.entries(obj).forEach(([key, value]) => {
+                        //console.log(JSON.stringify(key));
+                        const queryResult = value;
+                        //console.log(queryResult.image_path);
+                        const url = `http://localhost:3000/${queryResult.image_path}`
+
+                        const box = `
+                                    <figure>
+                                        <div id='box_${key}'>
+                                            <img src='${url}'>
+                                            <figcaption>${key}</figcaption>
+                                        </div>
+                                    </figure>
+                                        `
+                            ;
+                        html_string += box;
+                    });
+                });
+                document.getElementById('images').innerHTML = html_string;
+                //document.body.innerHTML = html_string ;
+            });
+
+
+        
+        document.getElementById("user_id").value = user_id;
+
+    </script>
+
+</section>

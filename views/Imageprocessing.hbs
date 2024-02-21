@@ -1,0 +1,164 @@
+<div class="text-box">
+    <h1>{{title}}</h1>
+    <p>
+        Image processing:使用傳統影像處理方式，調用不同filter找出影像紋理特徵。
+    </p>
+
+</div>
+</section>
+
+<section class="aug">
+    <h1>上傳資料集</h1>
+    <p>uplaod</p>
+    <div class="row">
+        <div class="aug-col">
+            <h3>Image processing</h3>
+            <p style="text-align:left">
+                影像處理<br>
+                1.上傳資料集<br>
+                2.選擇影像處理方式<br>
+                3.調整該方法相關參數<br>
+                4.執行<br>
+                5.尋找適合影像前處理方法<br>
+            </p>
+        </div>
+
+        <div class="col">
+            <div class="aug-col">
+                <h3>Upload single image</h3><br>
+                <input type="file" accept="image/*" id="uploader">
+            </div>
+        </div>
+    </div>
+
+    <div class="aug-col">
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#morphology">形態學</button>
+            </div>
+            <div class="col">
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#colorful">色調</button>
+            </div>
+            <div class="col">
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#channel">channel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 形態學Modal -->
+    <div class="modal fade" id="morphology" tabindex="-1" aria-labelledby="morphologyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="morphologyModalLabel">形態學</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    侵蝕<input type="range" id="erode" class="form-range" value="3"  min="1" max="7" oninput="this.nextElementSibling.value = this.value">
+                    <output for="erode"></output><br>
+                    膨脹<input type="range" id="dilate" class="form-range" value="3" min="1" max="7" oninput="this.nextElementSibling.value = this.value">
+                    <output for="dilate"></output><br>
+                    打開<input type="range" id="opening" class="form-range" value="3" min="1" max="7" oninput="this.nextElementSibling.value = this.value">
+                    <output for="opening"></output><br>
+                    關閉<input type="range" id="closing" class="form-range" value="3" min="1" max="7" oninput="this.nextElementSibling.value = this.value">
+                    <output for="closing"></output>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="morphologySubmit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 色調Modal-->
+    <div class="modal fade" id="colorful" tabindex="-1" aria-labelledby="colorfulModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="colorfulModalLabel">色調</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Hue<input type="range" id="hue" class="form-range" value="1"  min="1" max="255" oninput="this.nextElementSibling.value = this.value">
+                    <output for="hue"></output><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="colorfulSubmit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- channel Modal-->
+    <div class="modal fade" id="channel" tabindex="-1" aria-labelledby="channelModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="channelModalLabel">channel</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                   <button class="btn btn-outline-dark">R</button>
+                   <button class="btn btn-outline-dark">G</button>
+                   <button class="btn btn-outline-dark">B</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="channelSubmit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--上傳影像-->
+    <div class="row">
+        <div class="col">
+            <div class="container">
+                <canvas id="canvas_ori"></canvas>
+            </div>
+        </div>
+        <div class="col">
+            <div class="container">
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="aug">
+    <h1>影像處理</h1>
+    <div class="row">
+    </div>
+</section>
+
+<script>
+    let canvas = document.getElementById("canvas");
+    let canvas_ori = document.getElementById("canvas_ori");
+    let ctx = canvas.getContext("2d");
+    let ctx_ori = canvas_ori.getContext("2d");
+
+    let reader = new FileReader();
+    let img = new Image();
+    const uplaodImage = (e) => {
+        reader.onload = () => {
+            img.onload = () => {
+                canvas.width = 480;
+                canvas.height = 320;
+                canvas_ori.width = 480;
+                canvas_ori.height = 320;
+
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                ctx_ori.drawImage(img, 0, 0, canvas_ori.width, canvas_ori.height);
+            };
+            img.src = reader.result;
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    };
+    const imageLoader = document.getElementById("uploader");
+    imageLoader.addEventListener("change", uplaodImage);
+</script>
+
+<script>
+
+</script>

@@ -1,0 +1,74 @@
+<div class="text-box">
+    <h1>{{title}}</h1>
+    <p>
+        Auto Visualization:將多維度原始資料降維成2D、3D並產生視覺化分群成果。
+    </p>
+
+</div>
+
+
+</section>
+
+<section class="aug">
+    <h1>降維設定</h1>
+    <p>methods</p>
+    <div class="row">
+        <div class="aug-col">
+            <h3>Auto Visualization</h3>
+            <p style="text-align:left">
+                資料降維視覺化<br>
+                2.選擇PCA、T-SNE降維法<br>
+                3.調整分群數量<br>
+                4.執行<br>
+            </p>
+        </div>
+
+        <div class="container">
+            <div class="alert alert-primary">
+                <span class="label label-default">降維參數設定</span>
+            </div>
+
+        </div>
+
+
+
+
+        <form method="GET" action="/call/visual" id="visual_param">
+
+            <label for="user_id"></label>
+            <input type="hidden" id="user_id" name="user_id" readonly>
+            <br>
+            降維方式:
+            <input type="radio" id="PCA" name="method" value="PCA" checked="checked">
+            <label for="PCA">PCA</label>
+
+            <input type="radio" id="t_SNE" name="method" value="t_SNE" >
+            <label for="t_SNE">t-SNE</label>
+            <br><br>
+
+
+            繪圖維度:
+            <input type="radio" id="two" name="draw_method" value="2" checked="checked">
+            <label for="two">二維</label>
+
+            <input type="radio" id="three" name="draw_method" value="3">
+            <label for="three">三維</label>
+            <br><br>
+
+            <label for="k_means">分群數量:</label>
+            <input type="text" id="k_means" name="k_means" value="2" placeholder="分多少群(小於上傳資料數量)">
+            <br><br>
+
+            <input type="submit" id="submit_visual" name="submit_visual" value="submit" class="btn btn-primary">
+            <br><br>
+        </form>
+
+    </div>
+
+    <script>
+        const user_id = 1
+        document.getElementById("user_id").value = user_id;
+    </script>
+
+</section>
+

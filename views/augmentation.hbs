@@ -1,0 +1,75 @@
+<div class="text-box">
+    <h1>{{title}}</h1>
+    <p>
+        Augmentation:上傳資料集調整資料增強效果，快速打包下載。
+    </p>
+
+</div>
+
+<section class="aug">
+    <h1>上傳資料集</h1>
+    <p>uplaod</p>
+    <div class="row">
+
+        <div class="d-flex justify-content-center">
+            <div class="aug-col">
+                <h3>Auto Augmentation</h3>
+
+                <p style="text-align:left">
+                    資料增強<br>
+                    1.上傳資料集<br>
+                </p>
+            </div>
+
+            <!--上傳資料集-->
+            <div class="aug-col">
+                <form method="POST" action="/profile-upload-multiple" enctype="multipart/form-data" id="uploadImgs">
+                    <h3>Upload multiple images</h3><br>
+                    <div class="col" align="center">
+                        <input type="file" id="profile-files" name="profile-files" onchange="previewFile()"
+                            accept="image/*" required multiple />
+                        <!--顯示上傳資料-->
+                        <label for="file-input">
+                        </label>
+                        <p id="num-of-files"></p>
+                        <div id="images">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <input type="submit" value="Upload" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/javascripts/imgUpload.js"></script>
+
+    <!--顯示在iframe-->
+    <script type="text/javascript">
+        /*
+            const check = document.getElementById('uploadImgs');
+            if (check) {
+                document.getElementById('uploadImgs').submit();
+            }
+    
+            function showPreview(event) {
+                if (event.target.files.length > 0) {
+                    all_imgs = event.target.files;
+    
+                    //all_imgs.forEach(function (item, i) {
+                    //    console.log(i, item, '........')
+                    //});
+    
+                    console.log(all_imgs);
+                    var src = URL.createObjectURL(event.target.files[0]);
+                    var preview = document.getElementById("file-ip-1-preview");
+                    preview.src = src;
+                    preview.style.display = "block";
+                }
+            }  
+            */
+    </script>
+</section>

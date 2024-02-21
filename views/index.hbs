@@ -1,0 +1,110 @@
+<div class="text-box">
+    <div class="container">
+        <div class="row">
+            <h1>{{title}}</h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <p>
+                    Augmentation:上傳資料集調整資料增強效果，快速打包下載。
+                </p>
+                <a href="/augmentation" class="hero-btn">進行資料增強</a>
+            </div>
+            <div class="col">
+                <p>
+                    Image labeling:透過網頁進行資料標記並經專業醫師的錄音來協助了解標記準則。
+                </p>
+                <a href="/Imagelabeling" class="hero-btn">進行資料標記</a>
+            </div>
+            <div class="col">
+                <p>
+                    Image processing:使用傳統影像處理方式，調用不同filter找出影像紋理特徵。
+                </p>
+                <a href="/Imageprocessing" class="hero-btn">進行影像處理</a>
+            </div>
+            <div class="col">
+                <p>
+                    Auto Visualization:將多維度原始資料降維成2D、3D並產生視覺化分群成果。
+                </p>
+                <a href="/Visualization" class="hero-btn">進行分群視覺化</a>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+
+</section>
+
+<section class="steps">
+    <h1>詳盡使用步驟</h1>
+
+    <p>easy understand and detail using steps</p>
+
+    <div class="row">
+        <div class="steps-col">
+            <h3>Auto Augmentation</h3>
+            <p style="text-align:left">
+                資料增強<br>
+                1.上傳資料集<br>
+                2.選擇資料增強方式<br>
+                3.調整該方法相關參數<br>
+                4.組合多種方法<br>
+                5.執行<br>
+                6.一鍵下載<br>
+            </p>
+        </div>
+        <div class="steps-col">
+            <h3>Image Labeling</h3>
+            <p style="text-align:left">
+                協同資料標記<br>
+                1.上傳資料集<br>
+                2.邀請專業人士協助，使用polygon來標記物體<br>
+                3.醫師點選錄音來錄製講述的標記特徵、重點<br>
+                4.使用者透過錄音學習自行標記影像<br>
+                5.一鍵下載
+            </p>
+        </div>
+        <div class="steps-col">
+            <h3>Image Processing</h3>
+            <p style="text-align:left">
+                影像處理<br>
+                1.上傳資料集<br>
+                2.選擇影像處理方式<br>
+                3.調整該方法相關參數<br>
+                4.執行<br>
+                5.尋找適合影像前處理方法<br>
+            </p>
+        </div>
+        <div class="steps-col">
+            <h3>Auto Visualization</h3>
+            <p style="text-align:left">
+                資料降維視覺化<br>
+                1.上傳資料集<br>
+                2.選擇PCA、T-SNE降維法<br>
+                3.調整分群數量<br>
+                4.執行<br>
+                5.找到最適合的分群協助資料挑選<br>
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<!--JS 控制選單-->
+<script>
+    var navLinks = document.getElementById("navLinks");
+
+    function showMenu() {
+        navLinks.style.right = "0";
+    }
+    function hideMenu() {
+        navLinks.style.right = "-200px";
+    }
+</script>
